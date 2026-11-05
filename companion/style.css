@@ -1,0 +1,501 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --text: #1b1f27;
+  --muted: #5c6370;
+  --border: #d3d7de;
+  --field: #ffffff;
+  --accent: #3550c8;
+  --accent-text: #ffffff;
+  --subtle: #eceef3;
+  --code-bg: #f1f3f7;
+  --warn-bg: #fff3cd;
+  --warn-text: #6b4300;
+  --warn-border: #e0b04a;
+  --error: #b42318;
+  --ok: #1a7f37;
+  --focus: #3550c8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111318;
+    --card: #1a1d24;
+    --text: #e8eaf0;
+    --muted: #a3aab8;
+    --border: #3a404c;
+    --field: #13161c;
+    --accent: #7c93ff;
+    --accent-text: #0d1020;
+    --subtle: #262b35;
+    --code-bg: #13161c;
+    --warn-bg: #3b2e0f;
+    --warn-text: #ffd98a;
+    --warn-border: #8a6a1f;
+    --error: #ff8a80;
+    --ok: #5dd38a;
+    --focus: #9db0ff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Centre the card vertically when there is room, but keep it top-aligned when it is taller than the screen (keyboards, small phones). */
+body > :first-child {
+  margin-top: auto;
+}
+
+body > .foot {
+  margin-bottom: auto;
+}
+
+.logo {
+  width: 72px;
+  height: 72px;
+}
+
+.card {
+  width: 100%;
+  max-width: 30rem;
+  padding: 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(20, 24, 40, 0.04), 0 12px 32px rgba(20, 24, 40, 0.08);
+}
+
+h1 {
+  margin: 0 0 0.8rem;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.summary {
+  margin: 0 0 1.1rem;
+  padding: 0.85rem 1rem;
+  background: var(--subtle);
+  border-radius: 12px;
+}
+
+.summary p {
+  margin: 0;
+}
+
+.summary p + p {
+  margin-top: 0.3rem;
+}
+
+.what {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.note {
+  padding-left: 0.7rem;
+  color: var(--muted);
+  border-left: 3px solid var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.8rem;
+}
+
+h2 {
+  margin: 1.1rem 0 0.4rem;
+  font-size: 1rem;
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+dl {
+  margin: 0;
+}
+
+dt {
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+dd {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.status {
+  min-height: 1.45em;
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+}
+
+.status.error {
+  color: var(--error);
+  font-weight: 600;
+}
+
+.status.ok {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.stack > * + * {
+  margin-top: 0.9rem;
+}
+
+.block {
+  display: block;
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.7rem;
+  font: inherit;
+  font-size: 1rem; /* 16px avoids zoom on iOS */
+  color: var(--text);
+  background: var(--field);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+textarea {
+  min-height: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+  resize: none;
+}
+
+button {
+  min-height: 44px;
+  padding: 0 1rem;
+  touch-action: manipulation;
+  font: inherit;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+button.secondary {
+  background: var(--subtle);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+button.copy {
+  margin-top: 0.5rem;
+}
+
+button {
+  transition: filter 0.15s ease, transform 0.1s ease-out;
+}
+
+button:not(:disabled):hover {
+  filter: brightness(1.06);
+}
+
+button:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+  button:not(:disabled):active { transform: none; }
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.9rem;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+details form {
+  margin-top: 0.4rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.actions button {
+  flex: 1 1 8rem;
+}
+
+.secret {
+  padding: 0.9rem 0.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: clamp(1.05rem, 5.5vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  overflow-wrap: anywhere;
+  background: var(--code-bg);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  user-select: all;
+}
+
+.code {
+  padding: 0.7rem 0.8rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+  background: var(--code-bg);
+  border-radius: 10px;
+}
+
+.warn {
+  margin-top: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  color: var(--warn-text);
+  font-weight: 600;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: 10px;
+}
+
+a {
+  color: var(--accent);
+}
+
+.foot a {
+  display: inline-block;
+  padding: 0.6rem 0.8rem;
+}
+
+/* Privacy page: a normal document, not a card. */
+.doc {
+  gap: 0;
+}
+
+.doc > :first-child,
+.doc > .foot {
+  margin: 0;
+}
+
+.doc-head,
+.doc-body {
+  width: 100%;
+  max-width: 46rem;
+}
+
+.doc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-head a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.doc-nav {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.doc-nav a {
+  padding: 0 0.4rem;
+}
+
+.doc-body h3 {
+  margin: 1.4rem 0 0.2rem;
+  font-size: 1.05rem;
+}
+
+.doc-body ol {
+  margin: 0.6rem 0;
+  padding-left: 1.4rem;
+}
+
+.doc-body ol > li + li {
+  margin-top: 0.55rem;
+}
+
+.doc-body h2[id] {
+  scroll-margin-top: 1rem;
+}
+
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 1.2rem 0;
+  padding: 0.8rem 1rem;
+  background: var(--subtle);
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.toc a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+
+.doc-head .brand {
+  gap: 0.7rem;
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.doc-head img {
+  border-radius: 8px;
+}
+
+.doc-body {
+  padding: 1.6rem 0 2.5rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.doc-body h1 {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.7rem, 6vw, 2.3rem);
+}
+
+.doc-body h2 {
+  margin: 2.1rem 0 0.3rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+.doc-body p {
+  margin: 0.7rem 0;
+}
+
+.doc-body .lead {
+  margin: 1.4rem 0;
+  padding: 0.9rem 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.45;
+  background: var(--subtle);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+}
+
+.doc-body ul {
+  margin: 0.6rem 0;
+  padding-left: 1.3rem;
+}
+
+.doc-body li + li {
+  margin-top: 0.45rem;
+}
+
+.doc-body code {
+  padding: 0.1rem 0.35rem;
+  background: var(--code-bg);
+  border-radius: 5px;
+}
+
+/* Phones: less padding, bigger use of the width, stacked buttons. */
+@media (max-width: 30rem) {
+  body {
+    gap: 0.75rem;
+    padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  }
+
+  .logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .card {
+    padding: 1.1rem;
+    border-radius: 14px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  .actions button {
+    flex-basis: 100%;
+  }
+
+  .doc-body {
+    font-size: 1rem;
+  }
+}
+
+.offscreen {
+  position: fixed;
+  top: 0;
+  left: -9999px;
+  opacity: 0;
+}

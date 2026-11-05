@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Brainrot Buddy",
+  "version": "0.1.0",
+  "description": "Website blocker: extra time needs a signed approval from a partner you choose. All data stays on your device.",
+  "permissions": ["storage", "alarms", "tabs", "webNavigation"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "incognito": "spanning",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/timer.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_page": "pages/options.html",
+  "action": {
+    "default_title": "Brainrot Buddy",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  }
+}

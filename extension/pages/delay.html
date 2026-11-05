@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brainrot timer - Brainrot Buddy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <h1>Brainrot timer</h1>
+    <p id="site" class="site"></p>
+    <p id="count" class="count" aria-live="off">--:--</p>
+    <div class="bar"><div id="fill" class="fill"></div></div>
+    <p id="note" class="hint">The site opens when the timer ends.</p>
+    <button id="back" type="button" class="secondary">Go back</button>
+    <p id="error" class="err" hidden></p>
+  </main>
+  <script type="module" src="delay.js"></script>
+</body>
+</html>

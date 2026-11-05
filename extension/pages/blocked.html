@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blocked - Brainrot Buddy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <h1>Blocked</h1>
+    <p id="site" class="site"></p>
+    <p id="reason"></p>
+    <p id="message" class="message" hidden></p>
+
+    <section id="partner" hidden>
+      <h2>Request time</h2>
+
+      <div id="form">
+        <label>Minutes
+          <select id="minutes"></select>
+        </label>
+        <label>Note (optional)
+          <textarea id="note" rows="2" maxlength="200"></textarea>
+        </label>
+        <button id="ask" type="button" class="wide">Request time</button>
+      </div>
+
+      <div id="waiting" hidden>
+        <p>A request is waiting for your partner's reply.</p>
+        <div class="row">
+          <button id="cancelWaiting" type="button" class="secondary">Cancel request</button>
+          <button id="newRequest" type="button" class="secondary">New request</button>
+        </div>
+      </div>
+
+      <div id="linkBox" hidden>
+        <textarea id="link" class="link" rows="3" readonly></textarea>
+        <p id="copyState" class="hint"></p>
+        <p class="hint">Send this link to your partner. When they send one back, open it on this computer.</p>
+        <div class="row">
+          <button id="copyAgain" type="button" class="secondary">Copy again</button>
+          <button id="cancelLink" type="button" class="secondary">Cancel request</button>
+        </div>
+      </div>
+    </section>
+
+    <p id="error" class="err" hidden></p>
+  </main>
+  <script type="module" src="blocked.js"></script>
+</body>
+</html>

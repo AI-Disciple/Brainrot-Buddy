@@ -1,0 +1,17 @@
+# Only the extension, the companion page and this README are published.
+# Everything else in this folder (notes, tests, store files, personal options) stays on the local machine.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/extension/
+!/companion/
+
+# Pages that are deployed with the hosted copy only.
+/companion/guide.html
+/companion/privacy.html
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.claude/
