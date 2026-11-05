@@ -285,7 +285,7 @@ function renderUnsupported() {
   app.replaceChildren(
     h('h1', { text: 'Browser not supported' }),
     h('p', {
-      text: 'This page needs a recent browser (Chrome 137+, Safari 17+ or Firefox 129+). If you opened the link inside another app, open it in your regular browser instead.',
+      text: 'This page needs a recent browser (Microsoft Edge 137+, Chrome 137+, Safari 17+ or Firefox 129+). If you opened the link inside another app, open it in your regular browser instead.',
     }),
   );
 }
