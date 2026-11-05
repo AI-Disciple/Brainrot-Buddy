@@ -63,4 +63,4 @@ Disabling or uninstalling the extension, private windows (unless allowed), anoth
 
 ## Licence
 
-No licence has been chosen yet. Add a `LICENSE` file before sharing this publicly.
+[PolyForm Noncommercial 1.0.0](LICENSE). Anyone may use, copy, modify and share this software for noncommercial purposes, including personal use, hobby projects, education and charities. Selling it or using it commercially is not permitted. This is a source-available licence rather than an OSI-approved open-source one, because of the noncommercial condition.
