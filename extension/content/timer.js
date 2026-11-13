@@ -7,7 +7,6 @@
   let host = null; // element holding the shadow root
   let label = null;
   let endsAt = 0; // 0 = nothing to show
-  let kind = '';
 
   function format(ms) {
     const total = Math.max(0, Math.ceil(ms / 1000));
@@ -45,7 +44,7 @@
     if (!endsAt || document.fullscreenElement) return hide();
     show();
     const left = endsAt - Date.now();
-    label.textContent = `${kind === 'grant' ? 'Unlocked ' : ''}${format(left)}`;
+    label.textContent = format(left);
     label.classList.toggle('low', left < 60000);
   }
 
@@ -55,7 +54,6 @@
       const res = await chrome.runtime.sendMessage({ type: 'timerInfo' });
       const t = res && res.ok ? res.timer : null;
       endsAt = t ? Date.now() + t.remainingMs : 0;
-      kind = t ? t.kind : '';
     } catch {
       endsAt = 0; // extension was reloaded or removed
     }
