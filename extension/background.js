@@ -167,7 +167,7 @@ async function redeem(f) {
   if (!p) return fail('No pending request. Ask again from the blocked page.');
   if (p.id !== f.id) return fail('This approval is for another request.');
   if (!s.config.pubKey) return fail('No partner is paired.');
-  const durationOk = p.action === 'EXTEND' ? f.minutes >= 1 && f.minutes <= 120 : f.minutes === 0;
+  const durationOk = p.action === 'EXTEND' ? f.minutes >= 1 && f.minutes <= 1440 : f.minutes === 0;
   if (!durationOk) return fail('Invalid duration.');
   const msg = approvalMessage({ id: p.id, action: p.action, site: p.site, minutes: f.minutes });
   if (!(await verify(s.config.pubKey, msg, f.signature))) {
@@ -336,7 +336,7 @@ async function createRequest(m) {
   const site = String(m.site || '').trim().slice(0, 200);
   if (!site) return fail('Missing target.');
   const asked = Math.round(Number(m.minutes));
-  const minutes = m.action === 'EXTEND' ? (asked >= 1 ? Math.min(asked, 120) : 10) : 0;
+  const minutes = m.action === 'EXTEND' ? (asked >= 1 ? Math.min(asked, 1440) : 10) : 0;
   const now = Date.now();
   const pending = {
     id: randomId(), action: m.action, site, minutes,

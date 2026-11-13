@@ -4,7 +4,6 @@
 import { b64u } from './crypto.js';
 
 export const ACTIONS = ['EXTEND', 'REMOVE_SITE', 'REMOVE_LIST', 'EDIT_LIST', 'ADULT_OFF', 'INCOGNITO_OFF', 'REPAIR'];
-export const MINUTE_CHOICES = [5, 10, 30, 60];
 
 const ID_RE = /^[A-Za-z0-9_-]{11,22}$/; // new ids are 11 chars; longer ones from older versions still parse
 const PUB_RE = /^[A-Za-z0-9_-]{43}$/;

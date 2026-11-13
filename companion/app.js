@@ -1,7 +1,7 @@
 // Companion page: pairing (setup), approval of requests, and the approval link.
 // All request data comes from the URL fragment. The passphrase only lives in the input and in memory, never in storage.
 import { generatePassphrase, normalizePassphrase, pinProblem, supportsEd25519, deriveKeyPair, sign } from './crypto.js';
-import { MINUTE_CHOICES, approvalMessage, buildApprovalUrl, parseFragment } from './protocol.js';
+import { approvalMessage, buildApprovalUrl, parseFragment } from './protocol.js';
 
 const app = document.getElementById('app');
 
@@ -190,13 +190,16 @@ function renderRequest(req) {
     'aria-describedby': 'pp-hint',
   });
 
-  // Closest preset to the requested minutes; ties go to the smaller one.
-  const closest = MINUTE_CHOICES.reduce((best, m) => (Math.abs(m - req.minutes) < Math.abs(best - req.minutes) ? m : best));
-  const select = h(
-    'select',
-    { id: 'mins' },
-    ...MINUTE_CHOICES.map((m) => h('option', { value: m, text: `${m} min`, selected: m === closest })),
-  );
+  // Starts at the requested minutes; the partner can type or step to any whole number from 1 to 1440 (24 hours).
+  const select = h('input', {
+    id: 'mins',
+    type: 'number',
+    min: '1',
+    max: '1440',
+    step: '1',
+    inputmode: 'numeric',
+    value: String(Math.min(1440, Math.max(1, Math.round(req.minutes) || 10))),
+  });
 
   const approve = h('button', { type: 'button', class: 'primary', text: 'Approve' });
   const deny = h('button', { type: 'button', class: 'secondary', text: 'Deny' });
@@ -209,6 +212,9 @@ function renderRequest(req) {
     const problem = pinProblem(passphrase);
     if (problem) return say(status, `Enter your PIN. ${problem}`, true);
     const minutes = isExtend ? Number(select.value) : 0;
+    if (isExtend && (!Number.isInteger(minutes) || minutes < 1 || minutes > 1440)) {
+      return say(status, 'Enter a whole number of minutes from 1 to 1440 (24 hours).', true);
+    }
     setBusy(true, status);
     try {
       const { privateKey, publicKey } = await deriveKeyPair(passphrase);
@@ -236,7 +242,6 @@ function renderRequest(req) {
   // The headline already names the site and minutes, so only add them when it does not.
   const what = req.desc || DEFAULT_WHAT[req.action] || 'Asks for a change.';
   const showSite = req.site && !what.includes(req.site);
-  const askedOther = isExtend && closest !== req.minutes;
 
   app.replaceChildren(
     h('h1', { text: 'Approval request' }),
@@ -256,7 +261,7 @@ function renderRequest(req) {
     h('p', {
       id: 'pp-hint',
       class: 'hint',
-      text: `${askedOther ? `They asked for ${req.minutes} min. ` : ''}Your PIN is used only to sign here. It is never sent anywhere.`,
+      text: `Your PIN is used only to sign here. It is never sent anywhere.`,
     }),
     h('div', { class: 'actions' }, approve, deny),
     status,

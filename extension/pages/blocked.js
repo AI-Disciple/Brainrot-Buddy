@@ -1,6 +1,4 @@
 // Blocked screen: explains the block and, when the list is locked and a partner is paired, lets the user ask for time.
-import { MINUTE_CHOICES } from '../shared/protocol.js';
-
 const $ = (id) => document.getElementById(id);
 const u = new URLSearchParams(location.search).get('u') || '';
 let site = '';
@@ -59,15 +57,13 @@ function renderPartner(res) {
   const canAsk = res.config.phase === 'locked' && !!res.config.hasPartner;
   $('partner').hidden = !canAsk;
   if (!canAsk) return;
-  const sel = $('minutes');
-  for (const m of MINUTE_CHOICES) sel.append(new Option(`${m} min`, String(m)));
-  sel.value = '10';
   const waiting = !!res.pending && res.pending.expiresAt > Date.now();
   showPanel(waiting ? 'waiting' : 'form');
 }
 
 $('ask').addEventListener('click', async () => {
   const minutes = Number($('minutes').value);
+  if (!Number.isInteger(minutes) || minutes < 1 || minutes > 1440) return showError('Enter a whole number of minutes from 1 to 1440 (24 hours).');
   const note = $('note').value.trim().slice(0, 200);
   showError('');
   const res = await send({

@@ -81,7 +81,7 @@ p { margin: 0 0 12px; }
 #partner h2 { text-align: center; }
 
 label { display: block; margin-bottom: 12px; color: var(--muted); font-size: 0.9rem; }
-select, textarea {
+select, textarea, input[type="number"] {
   display: block;
   width: 100%;
   margin-top: 6px;
@@ -115,7 +115,7 @@ button.secondary { color: var(--text); background: transparent; border-color: va
 }
 button.wide { width: 100%; }
 button:disabled { opacity: 0.6; cursor: default; }
-button:focus-visible, select:focus-visible, textarea:focus-visible {
+button:focus-visible, select:focus-visible, textarea:focus-visible, input[type="number"]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
